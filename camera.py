@@ -23,8 +23,10 @@ class exposureCalc:
 		data = r.json()
 
 		results = data["results"]
-		sunrise = results["sunrise"]
-		sunset = results["sunset"]
+		sunrise = results["civil_twilight_begin"]
+		sunset = results["civil_twilight_end"]
+
+
 
 		sunrisetime = datetime.fromisoformat(sunrise)
 		sunsettime = datetime.fromisoformat(sunset)
