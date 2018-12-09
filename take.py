@@ -40,6 +40,12 @@ def make_os_command(config, exposureMode , file_name):
         " -o "+file_name
     return os_command
 
+def make_single_picture(config):
+    currentTime = int(time.strftime("%H%M"))
+    doTakeShot = exposureCalc.isBetweenSunriseAndSunset(currentTime);
+
+
+
 def run_loop(base, pause, config):
     am = config["am"]
     pm = config["pm"]

@@ -1,7 +1,16 @@
 import unittest
+from datetime import datetime
+
+from pytz import utc
+
 from camera import exposureCalc
 
+
 class test_camera(unittest.TestCase):
+	def test_curl(self):
+		now = utc.localize(datetime.utcnow())
+		self.assertEqual(exposureCalc.isBetweenSunriseAndSunset(
+			(datetime.fromisoformat("2018-12-09T15:05:35+00:00"))), True)
 	def test_exposureCalc_lowerBounds(self):
 		exposureCalc1=exposureCalc(700,1700)
 		self.assertEqual(exposureCalc1.get_exposure(700), "auto")
