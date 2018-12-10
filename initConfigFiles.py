@@ -1,4 +1,3 @@
-import json
 import sys
 from datetime import datetime
 from datetime import timedelta
@@ -17,26 +16,30 @@ def initSunriseSunsetFiles(lat, lng):
     currentDate = currentDate.replace(day=1, month=1)
     sunsetSunriseApiCall = 'https://api.sunrise-sunset.org/json?lat=' + lat + '&lng=' + lng + '&formatted=0&date='
 
-    callApiAndSaveFile(currentDate, sunsetSunriseApiCall)
+    callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall)
     while not (currentDate.day == 31 and currentDate.month == 12):
         currentDate = currentDate + timedelta(days=1)
-        callApiAndSaveFile(currentDate, sunsetSunriseApiCall)
+        callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall)
         print("saved twilight file for: " + str(currentDate))
         sys.stdout.flush()
 
     return True
 
 
-def callApiAndSaveFile(currentDate, sunsetSunriseApiCall):
+def callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall):
     datestring = str(currentDate.year) + "-" + str(currentDate.month) + "-" + str(currentDate.day)
-    filestring = str(currentDate.month) + "-" + str(currentDate.day)
     r = requests.get(sunsetSunriseApiCall + datestring)
     data = r.json()["results"]
     if data == "":
         print("no result found for: " + sunsetSunriseApiCall + datestring)
+    writeToDisk(currentDate, data)
+
+
+def writeToDisk(date, json):
+    filestring = str(date.month) + "-" + str(date.day)
     filename = path.join(config["twilight_times_path"], filestring + ".json")
     with open(filename, 'w') as output:
-        json.dump(data, output)
+        json.dump(json, output)
 
 
 if (__name__ == '__main__'):
@@ -50,6 +53,11 @@ if (__name__ == '__main__'):
         lat = str(sys.argv[1])
         lng = str(sys.argv[2])
 
+        print("searching handler for init_config_mode '" + config["init_config_mode"] + "'...")
+        if (config["init_config_mode"] == "sunrisesunset"):
+            initSunriseSunsetFiles(lat, lng)
+            exit()
+        print("no implementation found for '" + config["init_config_mode"] + "' using default 'sunrisesunset'")
         initSunriseSunsetFiles(lat, lng)
     except KeyboardInterrupt:
         print("Cancelling twilight init")
