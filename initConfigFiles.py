@@ -23,8 +23,6 @@ def initSunriseSunsetFiles(lat, lng):
         print("saved twilight file for: " + str(currentDate))
         sys.stdout.flush()
 
-    return True
-
 
 def callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall):
     datestring = str(currentDate.year) + "-" + str(currentDate.month) + "-" + str(currentDate.day)
