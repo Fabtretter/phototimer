@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from datetime import datetime
 
 import fileutils
@@ -26,7 +27,15 @@ def make_os_command(config, exposureMode, file_name):
 
 
 def shoot_picture():
-    take_shot = exposureCalc.isBetweenSunriseAndSunset(datetime.now())
+    exposureCalc1 = exposureCalc()
+
+    take_shot = False
+    if config["mode"] == "always":
+        take_shot = True
+    if config["mode"] == "config":
+        take_shot = exposureCalc1.take_shot(config["am"], config["pm"], int(time.strftime("%H%M")))
+    if config["mode"] == "twilight":
+        take_shot = exposureCalc1.isBetweenSunriseAndSunset(datetime.now())
 
     if (take_shot):
         now = datetime.now()
