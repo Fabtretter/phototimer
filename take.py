@@ -2,26 +2,11 @@ import os
 import sys
 import time
 from datetime import datetime
+
+import fileutils
 from camera import exposureCalc
 from config import config
 
-def try_to_mkdir(path):
-    if os.path.exists(path) == False:
-        os.makedirs(path)
-
-def prepare_dir(base, now):
-    path = str(now.year)
-    try_to_mkdir(base + "/" +path)
-
-    path = str(now.year)  + "/"  + str(now.month)
-    try_to_mkdir(base + "/" +path)
-
-    path = str( datetime.now().year)  + "/"  + str( datetime.now().month)+"/"+ str( datetime.now().day)
-    try_to_mkdir(base + "/" +path)
-
-    path =  str( datetime.now().year)  + "/"  + str( datetime.now().month)+"/"+ str( datetime.now().day)+"/"+ str( datetime.now().hour)
-    try_to_mkdir(base + "/" +path)
-    return path
 
 def make_os_command(config, exposureMode , file_name):
     height = config["height"]
@@ -40,12 +25,6 @@ def make_os_command(config, exposureMode , file_name):
         " -o "+file_name
     return os_command
 
-def make_single_picture(config):
-    currentTime = int(time.strftime("%H%M"))
-    doTakeShot = exposureCalc.isBetweenSunriseAndSunset(currentTime);
-
-
-
 def run_loop(base, pause, config):
     am = config["am"]
     pm = config["pm"]
@@ -60,9 +39,10 @@ def run_loop(base, pause, config):
         exposureMode = exposureCalc1.get_exposure(hoursMinutes)
         take_shot = exposureCalc1.take_shot(hoursMinutes)
 
+        # bug? exposure Mode will always be auto if take_shot == True
         if (take_shot == True):
             now = datetime.now()
-            path = prepare_dir(base, now)
+            path = fileutils.prepare_dir_in_date_format(base, now)
 
             mili = str(current_milli_time())
             name=path.replace("/", "_") + "_" + mili + ".jpg"

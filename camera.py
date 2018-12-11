@@ -26,8 +26,6 @@ class exposureCalc:
 		sunrise = results["civil_twilight_begin"]
 		sunset = results["civil_twilight_end"]
 
-
-
 		sunrisetime = datetime.fromisoformat(sunrise)
 		sunsettime = datetime.fromisoformat(sunset)
 
