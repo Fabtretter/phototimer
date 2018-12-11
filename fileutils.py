@@ -5,7 +5,7 @@ def try_to_mkdir(path):
         os.makedirs(path)
 
 def prepare_dir_in_date_format(base, datetime):
-    path = os.path.join(base, datetime.year, datetime.month, datetime.day)
+    path = os.path.join(base, str(datetime.year), str(datetime.month), str(datetime.day))
     try_to_mkdir(path)
 
     return path
