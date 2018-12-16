@@ -20,7 +20,7 @@ config["mode"] = "twilight"
 config["am"] = 400
 config["pm"] = 2000
 
-config["twilight_times_path"] = "twiligth_times"
+config["twilight_times_path"] = "./twiligth_times"
 # possible values are: always, never, config.
 # Always: no twilight file found => take a picture anyway
 # Never: no twilight file found => dont take a picture
