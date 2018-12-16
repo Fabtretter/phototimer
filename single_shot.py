@@ -1,3 +1,4 @@
+import logging
 import os
 import sys
 import time
@@ -31,7 +32,7 @@ def shoot_picture():
 
     take_shot = False
     mode = config["mode"]
-    print("Mode: " + mode)
+    logging.info("Mode: " + mode)
 
     if mode == "always":
         take_shot = True
@@ -45,14 +46,14 @@ def shoot_picture():
         path = fileutils.prepare_dir_in_date_format(config["base_path"], now)
 
         name = generate_file_name(now);
-        print("Taking shot: " + name)
+        logging.info("Taking shot: " + name)
         file_name = os.path.join(path, name)
 
         os_command = make_os_command(config, "auto", file_name)
         os.system(os_command)
-        print("Written: " + file_name)
+        logging.info("Written: " + file_name)
     else:
-        print("No picture was shot because its dark outside")
+        logging.info("No picture was shot because its dark outside")
 
 
 def generate_file_name(now):
@@ -60,10 +61,11 @@ def generate_file_name(now):
 
 
 if (__name__ == '__main__'):
+    logging.basicConfig(filename='single_shot.log', level=logging.DEBUG)
     if len(sys.argv) < 1:
         exit()
     else:
         try:
             shoot_picture()
         except KeyboardInterrupt:
-            print("Cancelling take.py")
+            logging.info("Cancelling take.py")
