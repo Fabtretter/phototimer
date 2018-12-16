@@ -1,3 +1,4 @@
+import json
 import sys
 from datetime import datetime
 from datetime import timedelta
@@ -32,10 +33,10 @@ def callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall):
     writeToDisk(currentDate, data)
 
 
-def writeToDisk(date, json):
+def writeToDisk(date, jsonText):
     filename = fileutils.getConfigFileName(date)
     with open(filename, 'w') as output:
-        json.dump(json, output)
+        json.dump(jsonText, output)
 
 
 if (__name__ == '__main__'):
