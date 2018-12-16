@@ -16,7 +16,7 @@ class exposureCalc:
 			return True
 		return False
 
-	def isBetweenSunriseAndSunset(time):
+	def isBetweenSunriseAndSunset(self, time):
 
 		with open(fileutils.getConfigFileName(time), "r") as twilightConfig:
 			data = twilightConfig.readlines()
