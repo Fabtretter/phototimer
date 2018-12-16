@@ -20,7 +20,6 @@ def initSunriseSunsetFiles(lat, lng):
     while not (currentDate.day == 31 and currentDate.month == 12):
         currentDate = currentDate + timedelta(days=1)
         callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall)
-        print("saved twilight file for: " + str(currentDate))
         sys.stdout.flush()
 
 
@@ -31,6 +30,7 @@ def callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall):
     if data == "":
         print("no result found for: " + sunsetSunriseApiCall + datestring)
     writeToDisk(currentDate, data)
+    print("saved twilight file for: " + str(currentDate))
 
 
 def writeToDisk(date, jsonText):
