@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 import fileutils
@@ -19,7 +20,7 @@ class exposureCalc:
 	def isBetweenSunriseAndSunset(self, time):
 
 		with open(fileutils.getConfigFileName(time), "r") as twilightConfig:
-			data = twilightConfig.readlines()
+			data = json.load(twilightConfig)
 
 		sunrise = data["civil_twilight_begin"]
 		sunset = data["civil_twilight_end"]
