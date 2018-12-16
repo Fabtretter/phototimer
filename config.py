@@ -15,7 +15,7 @@ config["quality"] = 35
 # Always: dont check for times at all, just shoot a picture
 # Twilight: use twilight times from your config folder. Make a picture if current time is between sunrise and sunset.
 # Config: use "am" and "pm" from the configuration
-config["mode"] = "always"
+config["mode"] = "twilight"
 
 config["am"] = 400
 config["pm"] = 2000
