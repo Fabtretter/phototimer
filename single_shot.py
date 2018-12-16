@@ -30,11 +30,14 @@ def shoot_picture():
     exposureCalc1 = exposureCalc()
 
     take_shot = False
-    if config["mode"] == "always":
+    mode = config["mode"]
+    print("Mode: " + mode)
+
+    if mode == "always":
         take_shot = True
-    if config["mode"] == "config":
+    if mode == "config":
         take_shot = exposureCalc1.take_shot(config["am"], config["pm"], int(time.strftime("%H%M")))
-    if config["mode"] == "twilight":
+    if mode == "twilight":
         take_shot = exposureCalc1.isBetweenSunriseAndSunset(datetime.now())
 
     if (take_shot):
@@ -49,7 +52,7 @@ def shoot_picture():
         os.system(os_command)
         print("Written: " + file_name)
     else:
-        print("Shot cancelled during hours of darkness")
+        print("No picture was shot because its dark outside")
 
 
 def generate_file_name(now):
@@ -61,7 +64,6 @@ if (__name__ == '__main__'):
         exit()
     else:
         try:
-            basePath = config["base_path"]
             shoot_picture()
         except KeyboardInterrupt:
             print("Cancelling take.py")

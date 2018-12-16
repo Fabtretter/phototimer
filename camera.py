@@ -1,7 +1,12 @@
+from datetime import datetime
+
+import fileutils
+
+
 class exposureCalc:
 
 	def get_exposure(self, sunrise, sunset, time):
-		if(time >=self.sunrise and time <=self.sunset):
+		if (time >= sunrise and time <= sunset):
 			return 'auto'
 		return 'night'
 		
@@ -11,15 +16,15 @@ class exposureCalc:
 			return True
 		return False
 
-# def isBetweenSunriseAndSunset(time):
-# r = requests.get('https://api.sunrise-sunset.org/json?lat=48.26667&lng=12.41667&formatted=0')
-# data = r.json()
-#
-# results = data["results"]
-# sunrise = results["civil_twilight_begin"]
-# sunset = results["civil_twilight_end"]
-#
-# sunrisetime = datetime.fromisoformat(sunrise)
-# sunsettime = datetime.fromisoformat(sunset)
-#
-# return sunrisetime < time < sunsettime
+	def isBetweenSunriseAndSunset(time):
+
+		with open(fileutils.getConfigFileName(time), "r") as twilightConfig:
+			data = twilightConfig.readlines()
+
+		sunrise = data["civil_twilight_begin"]
+		sunset = data["civil_twilight_end"]
+
+		sunrise_time = datetime.fromisoformat(sunrise)
+		sunset_time = datetime.fromisoformat(sunset)
+
+		return sunrise_time < time < sunset_time

@@ -1,7 +1,6 @@
 import sys
 from datetime import datetime
 from datetime import timedelta
-from os import path
 
 import requests
 
@@ -34,8 +33,7 @@ def callSunriseSunsetAndSaveFile(currentDate, sunsetSunriseApiCall):
 
 
 def writeToDisk(date, json):
-    filestring = str(date.month) + "-" + str(date.day)
-    filename = path.join(config["twilight_times_path"], filestring + ".json")
+    filename = fileutils.getConfigFileName(date)
     with open(filename, 'w') as output:
         json.dump(json, output)
 

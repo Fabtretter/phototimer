@@ -1,4 +1,5 @@
 import os
+import config
 
 def try_to_mkdir(path):
     if os.path.exists(path) == False:
@@ -9,3 +10,7 @@ def prepare_dir_in_date_format(base, datetime):
     try_to_mkdir(path)
 
     return path
+
+def getConfigFileName(date):
+    filestring = str(date.month) + "-" + str(date.day)
+    return os.path.join(config["twilight_times_path"], filestring + ".json")
