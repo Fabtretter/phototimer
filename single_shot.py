@@ -39,7 +39,7 @@ def shoot_picture():
     if mode == "config":
         take_shot = exposureCalc1.take_shot(config["am"], config["pm"], int(time.strftime("%H%M")))
     if mode == "twilight":
-        take_shot = exposureCalc1.isBetweenSunriseAndSunset(datetime.now())
+        take_shot = exposureCalc1.isBetweenSunriseAndSunset(datetime.utcnow())
 
     if (take_shot):
         now = datetime.now()
