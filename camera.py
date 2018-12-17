@@ -28,4 +28,4 @@ class exposureCalc:
 		sunrise_time = datetime.fromisoformat(sunrise)
 		sunset_time = datetime.fromisoformat(sunset)
 
-		return sunrise_time < time < sunset_time
+		return sunrise_time.replace(tzinfo=None) < time.replace(tzinfo=None) < sunset_time.replace(tzinfo=None)
